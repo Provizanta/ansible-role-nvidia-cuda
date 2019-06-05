@@ -1,0 +1,39 @@
+---
+
+- when: cuda_compatible is not defined
+  name: nvidia graphics card repo
+  apt_repository:
+    repo: ppa:graphics-drivers/ppa
+    state: present
+    filename: nvidia-graphics
+  tags: install
+
+- when: cuda_compatible is defined
+  block:
+    - name: cuda | add repo key
+      apt_key:
+        url: "{{ cuda_repo_path }}/{{ distro }}/{{ ansible_architecture }}/7fa2af80.pub"
+        state: present
+      tags: install
+
+    - name: cuda | establish cuda repo
+      apt_repository:
+        repo: "deb {{ cuda_repo_path }}/{{ distro }}/{{ ansible_architecture }} /"
+        state: present
+        filename: nvidia-cuda
+      register: repo
+      tags: install
+
+    - name: update repo
+      when: repo.changed
+      apt:
+        update_cache: true
+  vars:
+    cuda_repo_path: http://developer.download.nvidia.com/compute/cuda/repos
+    distro: "{{ ansible_distribution | lower}}{{ ansible_distribution_version | regex_replace('.') }}"
+
+- name: nvidia
+  package:
+    name: nvidia-driver-{{ version }}
+    state: present
+  tags: install
