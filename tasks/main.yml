@@ -10,6 +10,12 @@
 
 - when: cuda_compatible is defined
   block:
+    - name: cuda | establish pre-requisites
+      package:
+        name: gpg-agent
+        state: present
+      tags: install
+
     - name: cuda | add repo key
       apt_key:
         url: "{{ cuda_repo_path }}/{{ distro }}/{{ ansible_architecture }}/7fa2af80.pub"
@@ -29,8 +35,8 @@
       apt:
         update_cache: true
   vars:
-    cuda_repo_path: http://developer.download.nvidia.com/compute/cuda/repos
-    distro: "{{ ansible_distribution | lower}}{{ ansible_distribution_version | regex_replace('.') }}"
+    cuda_repo_path: https://developer.download.nvidia.com/compute/cuda/repos
+    distro: "{{ ansible_distribution | lower }}{{ ansible_distribution_version | replace('.', '') }}"
 
 - name: nvidia
   package:

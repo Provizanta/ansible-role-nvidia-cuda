@@ -10,7 +10,6 @@ env:
     - ROLE_NAME: nvidia-cuda
   matrix:
     - MOLECULE_DISTRO: ubuntu1804
-    - MOLECULE_DISTRO: ubuntu1810
 
 install:
   - pip install molecule docker
