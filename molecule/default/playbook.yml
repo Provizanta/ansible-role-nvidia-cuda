@@ -3,5 +3,5 @@
 - name: Converge
   hosts: all
   roles:
-    - role: nvidia
-      vars:
+    - role: nvidia-cuda
+      vars: {}
