@@ -7,7 +7,6 @@ Install Nvidia drivers with optionally installing the latest CUDA drivers.
 
 Highly inspired by:
 - [CSCfi](https://github.com/CSCfi/ansible-role-cuda.git)
-- [slothai](https://github.com/slothai/ansible-cuda.git)
 
 Requirements
 ------------
@@ -17,8 +16,10 @@ None
 Role Variables
 --------------
 
-    version: <int, nvidia driver version to be installed>
-    cuda_compatible: <bool, use a cuda comptabile driver>
+    driver:
+      version: <int, nvidia driver version to be installed>
+      cuda_compatible: <bool, use cuda compatible driver>
+    install_cuda: <bool, establish cuda along with its drivers>
 
 Dependencies
 ------------
@@ -32,7 +33,7 @@ Example Playbook
       roles:
         - role: nvidia-cuda
           vars:
-            cuda_compatible: true
+            install_cuda: true
 
 License
 -------

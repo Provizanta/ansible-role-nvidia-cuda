@@ -1,45 +1,46 @@
 ---
 
-- when: cuda_compatible is not defined
-  name: nvidia graphics card repo
-  apt_repository:
-    repo: ppa:graphics-drivers/ppa
+- name: platform dependent vars
+  include_vars: "{{ item }}"
+  loop: "{{ query('first_found', params, errors='ignore') }}"
+  vars:
+    params:
+      files:
+        - "{{ ansible_distribution }}-{{ ansible_distribution_release }}.yml"
+        - "{{ ansible_distribution }}.yml"
+        - "{{ ansible_os_family }}.yml"
+        - "{{ ansible_system }}.yml"
+      paths:
+        - '{{ role_path }}/vars/platform'
+  tags: always
+
+- name: cuda | establish pre-requisites
+  package:
+    name: gpg-agent
     state: present
-    filename: nvidia-graphics
   tags: install
 
-- when: cuda_compatible is defined
+- when: not install_cuda | bool
   block:
-    - name: cuda | establish pre-requisites
-      package:
-        name: gpg-agent
-        state: present
-      tags: install
-
-    - name: cuda | add repo key
-      apt_key:
-        url: "{{ cuda_repo_path }}/{{ distro }}/{{ ansible_architecture }}/7fa2af80.pub"
-        state: present
-      tags: install
-
-    - name: cuda | establish cuda repo
+    - name: nvidia graphics card repo
+      when:
+        - ansible_pkg_mgr == 'apt'
+        - not driver['cuda_compatible'] | bool
+        - not install_cuda | bool
       apt_repository:
-        repo: "deb {{ cuda_repo_path }}/{{ distro }}/{{ ansible_architecture }} /"
+        repo: ppa:graphics-drivers/ppa
         state: present
-        filename: nvidia-cuda
-      register: repo
+        filename: nvidia-graphics
       tags: install
 
-    - name: update repo
-      when: repo.changed
-      apt:
-        update_cache: true
+- include_tasks: cuda.yml
+  when: install_cuda | bool or driver['cuda_compatible'] | bool
   vars:
-    cuda_repo_path: https://developer.download.nvidia.com/compute/cuda/repos
-    distro: "{{ ansible_distribution | lower }}{{ ansible_distribution_version | replace('.', '') }}"
+    distro: "{{ ansible_distribution | lower }}{{ ansible_distribution_version | replace('.','') }}"
 
-- name: nvidia
+- name: nvidia driver
+  when: not install_cuda | bool
   package:
-    name: nvidia-driver-{{ version }}
+    name: nvidia-driver-{{ driver['version'] }}
     state: present
   tags: install

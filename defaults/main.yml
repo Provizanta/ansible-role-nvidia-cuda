@@ -1,4 +1,7 @@
 ---
 
-cuda_compatible: false
-version: 418
+driver:
+  version: 418
+  cuda_compatible: true
+
+install_cuda: false
