@@ -1,4 +1,4 @@
-Nvidia + CUDA drivers
+Ansible role: Nvidia + CUDA drivers
 =========
 
 [![Build Status](https://travis-ci.com/Teebor-Choka/Provisioning---Ansible-role-nvidia-cuda.svg?branch=master)](https://travis-ci.com/Teebor-Choka/Provisioning---Ansible-role-nvidia-cuda)
