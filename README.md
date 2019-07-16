@@ -1,7 +1,7 @@
 Ansible role: Nvidia + CUDA drivers
 =========
 
-[![Build Status](https://travis-ci.com/Teebor-Choka/Provisioning---Ansible-role-nvidia-cuda.svg?branch=master)](https://travis-ci.com/Teebor-Choka/Provisioning---Ansible-role-nvidia-cuda)
+[![Build Status](https://travis-ci.com/Provizanta/ansible-role-nvidia-cuda.svg?branch=master)](https://travis-ci.com/Provizanta/ansible-role-nvidia-cuda)
 
 Install Nvidia drivers with optionally installing the latest CUDA drivers.
 
