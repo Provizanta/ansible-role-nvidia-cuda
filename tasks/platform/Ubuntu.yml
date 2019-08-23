@@ -1,12 +1,14 @@
 ---
 
 - name: cuda | add repo key
+  become: true
   apt_key:
     url: "{{ cuda_repos_base_url }}/{{ distro }}/{{ ansible_architecture }}/7fa2af80.pub"
     state: present
   tags: install
 
 - name: cuda | establish repo
+  become: true
   apt_repository:
     repo: "deb {{ cuda_repos_base_url }}/{{ distro }}/{{ ansible_architecture }} /"
     state: present

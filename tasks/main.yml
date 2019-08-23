@@ -15,6 +15,7 @@
   tags: always
 
 - name: cuda | establish pre-requisites
+  become: true
   package:
     name: gpg-agent
     state: present
@@ -40,6 +41,7 @@
 
 - name: nvidia driver
   when: not install_cuda | bool
+  become: true
   package:
     name: nvidia-driver-{{ driver['version'] }}
     state: present
