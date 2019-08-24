@@ -16,10 +16,15 @@ None
 Role Variables
 --------------
 
+These variables are defined in defaults/main.yml:
+
     driver:
-      version: <int, nvidia driver version to be installed>
-      cuda_compatible: <bool, use cuda compatible driver>
-    install_cuda: <bool, establish cuda along with its drivers>
+      version: 418
+      cuda_compatible: true
+
+    install_cuda: false
+
+    install_container_runtime: false
 
 Dependencies
 ------------

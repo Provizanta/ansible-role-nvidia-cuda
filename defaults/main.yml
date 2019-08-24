@@ -5,3 +5,5 @@ driver:
   cuda_compatible: true
 
 install_cuda: false
+
+install_container_runtime: false
