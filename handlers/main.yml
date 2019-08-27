@@ -1,5 +1,0 @@
----
-
-- name: update repo | apt
-  apt:
-    update_cache: true

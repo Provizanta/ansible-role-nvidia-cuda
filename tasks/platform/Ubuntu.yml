@@ -13,5 +13,4 @@
     repo: "deb {{ cuda_repos_base_url }}/{{ distro }}/{{ ansible_architecture }} /"
     state: present
     filename: nvidia-cuda
-  notify: update repo | apt
   tags: install
