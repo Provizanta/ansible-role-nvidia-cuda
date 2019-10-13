@@ -1,5 +1,16 @@
 ---
 
+- name: cuda | establish pre-requisites
+  become: true
+  apt:
+    name: gpg-agent
+    state: present
+  tags: install
+
+- name: cuda | prepare facts
+  set_fact:
+    distro: "{{ ansible_distribution | lower }}{{ ansible_distribution_version | replace('.','') }}"
+
 - name: cuda | add repo key
   become: true
   apt_key:

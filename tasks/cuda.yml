@@ -1,20 +1,21 @@
 ---
 
-- name: cuda | platform dependent tasks
+- name: cuda | pre-install tasks
   include_tasks: "{{ item }}"
   loop: "{{ query('first_found', params, errors='ignore') }}"
   vars:
     params:
       files:
-        - "{{ ansible_distribution }}-{{ ansible_distribution_release }}.yml"
-        - "{{ ansible_distribution }}.yml"
-        - "{{ ansible_os_family }}.yml"
-        - "{{ ansible_system }}.yml"
+        - "pre_install_{{ ansible_distribution }}-{{ ansible_distribution_release }}.yml"
+        - "pre_install_{{ ansible_distribution }}.yml"
+        - "pre_install_{{ ansible_os_family }}.yml"
+        - "pre_install_{{ ansible_system }}.yml"
       paths:
         - '{{ role_path }}/tasks/platform/'
+  tags: install
 
 - name: cuda | establish package
-  when: install_cuda | bool
+  when: nvidia_cuda_install_cuda
   package:
     name: cuda
     state: present

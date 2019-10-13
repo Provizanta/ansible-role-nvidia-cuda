@@ -14,57 +14,14 @@
         - '{{ role_path }}/vars/platform'
   tags: always
 
-- name: cuda | establish pre-requisites
-  become: true
-  package:
-    name: gpg-agent
-    state: present
-  tags: install
+- name: establish nvidia driver
+  when: not nvidia_cuda_install_cuda
+  include_tasks: nvidia_driver.yml
 
-- when: not install_cuda | bool
-  block:
-    - name: nvidia graphics card repo
-      when:
-        - ansible_pkg_mgr == 'apt'
-        - not driver['cuda_compatible'] | bool
-        - not install_cuda | bool
-      apt_repository:
-        repo: ppa:graphics-drivers/ppa
-        state: present
-        filename: nvidia-graphics
-      tags: install
+- name: establish nvidia cuda
+  when: nvidia_cuda_install_cuda
+  include_tasks: cuda.yml
 
-- include_tasks: cuda.yml
-  when: install_cuda | bool or driver['cuda_compatible'] | bool
-  vars:
-    distro: "{{ ansible_distribution | lower }}{{ ansible_distribution_version | replace('.','') }}"
-
-- name: nvidia driver
-  when: not install_cuda | bool
-  become: true
-  package:
-    name: nvidia-driver-{{ driver['version'] }}
-    state: present
-  tags: install
-
-- name: nvidia container runtime
-  when: install_container_runtime
-  become: true
-  tags: install
-  block:
-    - name: nvidia container runtime | add repo key
-      apt_key:
-        url: https://nvidia.github.io/nvidia-container-runtime/gpgkey
-        state: present
-
-    - name: nvidia container runtime | add repo
-      apt_repository:
-        repo: "{{ item }}"
-        filename: nvidia-container-runtime
-        state: present
-      loop: "{{ lookup('url', 'https://nvidia.github.io/nvidia-container-runtime/ubuntu18.04/nvidia-container-runtime.list', wantlist=True) }}"
-
-    - name: nvidia container runtime | establish package
-      apt:
-        name: nvidia-container-runtime
-        state: present
+- name: establish nvidia container runtime
+  when: nvidia_cuda_install_container_runtime
+  include_tasks: container_runtime.yml

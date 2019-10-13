@@ -16,15 +16,13 @@ None
 Role Variables
 --------------
 
-These variables are defined in defaults/main.yml:
+These variables are defined in [defaults/main.yml](./defaults/main.yml):
 
-    driver:
-      version: 418
-      cuda_compatible: true
+    nvidia_cuda_driver_version: 430
 
-    install_cuda: false
+    nvidia_cuda_install_cuda: false
 
-    install_container_runtime: false
+    nvidia_cuda_install_container_runtime: false
 
 Dependencies
 ------------
@@ -38,7 +36,7 @@ Example Playbook
       roles:
         - role: nvidia-cuda
           vars:
-            install_cuda: true
+            nvidia_cuda_install_cuda: true
 
 License
 -------
@@ -48,4 +46,4 @@ MIT
 Author Information
 ------------------
 
-Tibor Csoka
+Tibor Csóka
