@@ -1,5 +1,7 @@
 ---
 
+# installation guide: https://nvidia.github.io/nvidia-container-runtime/
+
 - name: container runtime | add repo key
   become: true
   apt_key:
@@ -13,7 +15,7 @@
     repo: "{{ item }}"
     filename: nvidia-container-runtime
     state: present
-  loop: "{{ lookup('url', 'https://nvidia.github.io/nvidia-container-runtime/ubuntu18.04/nvidia-container-runtime.list', wantlist=True) }}"
+  loop: "{{ lookup('url', 'https://nvidia.github.io/nvidia-container-runtime/{{ ansible_distribution | lower }}{{ ansible_distribution_version }}/nvidia-container-runtime.list', wantlist=True) | reject('match', '^[#]') | list }}"   # noqa 204
   tags: install
 
 - name: container runtime | establish package

@@ -1,0 +1,26 @@
+---
+
+galaxy_info:
+  role_name: nvidia-cuda
+  author: Tibor Csóka
+  description: |
+    "Establish nvidia-cuda system driver"
+  company: ""
+
+  license: MIT
+
+  min_ansible_version: 2.4
+
+  platforms:
+    - name: Ubuntu
+      versions:
+        - focal
+        - bionic
+
+  galaxy_tags:
+    - nvidia
+    - cuda
+    - container
+    - runtime
+
+dependencies: []

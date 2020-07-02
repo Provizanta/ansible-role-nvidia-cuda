@@ -11,6 +11,7 @@ env:
   global:
     - ROLE_NAME: nvidia-cuda
   matrix:
+    - MOLECULE_DISTRO: ubuntu2004
     - MOLECULE_DISTRO: ubuntu1804
 
 install:
@@ -25,3 +26,4 @@ script:
   - molecule test
 
 notifications:
+  webhooks: https://galaxy.ansible.com/api/v1/notifications/?branch=master
