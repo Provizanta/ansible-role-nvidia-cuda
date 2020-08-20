@@ -8,5 +8,5 @@
       apt:
         update_cache: true
   roles:
-    - role: nvidia-cuda
+    - role: ansible-role-nvidia-cuda
       vars: {}
