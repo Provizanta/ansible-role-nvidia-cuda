@@ -1,7 +1,7 @@
 ---
 
 galaxy_info:
-  role_name: nvidia-cuda
+  role_name: nvidia_cuda
   author: Tibor Csóka
   description: |
     "Establish nvidia-cuda system driver"
