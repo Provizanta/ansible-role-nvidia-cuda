@@ -32,3 +32,10 @@
 - name: establish nvidia container runtime
   when: nvidia_cuda_install_container_runtime
   include_tasks: container_runtime.yml
+
+- name: add optimus support
+  when: nvidia_cuda_add_optimus_support
+  package:
+    name: bumblebee-nvidia
+    state: present
+  tags: install
