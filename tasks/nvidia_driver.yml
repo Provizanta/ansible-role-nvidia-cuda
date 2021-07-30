@@ -9,8 +9,27 @@
     filename: nvidia-graphics
   tags: install
 
+- name: check ubuntu-drivers presence
+  when:
+    - ansible_distribution == 'Ubuntu'
+  command:
+    cmd: ubuntu-drivers --help
+  changed_when: false
+  failed_when: false
+  register: ubuntu_drivers_command
+
 - name: establish nvidia driver
-  when: not nvidia_cuda_install_cuda
+  when:
+    - ansible_distribution == 'Ubuntu'
+    - ubuntu_drivers_command.rc == 0
+  become: true
+  command:
+    cmd: ubuntu-drivers install -gpgpu
+  tags: install
+
+- name: establish nvidia driver
+  when:
+    - ansible_distribution != 'Ubuntu'
   become: true
   package:
     name: nvidia-driver-{{ nvidia_cuda_driver_version }}

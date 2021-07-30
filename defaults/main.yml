@@ -1,5 +1,7 @@
 ---
 
+nvidia_cuda_add_optimus_support: false
+
 nvidia_cuda_driver_version: 430
 
 nvidia_cuda_install_cuda: false
