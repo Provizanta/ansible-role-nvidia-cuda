@@ -35,6 +35,7 @@
 
 - name: add optimus support
   when: nvidia_cuda_add_optimus_support
+  become: true
   package:
     name: bumblebee-nvidia
     state: present
