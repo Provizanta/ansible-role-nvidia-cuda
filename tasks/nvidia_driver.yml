@@ -24,7 +24,7 @@
     - ubuntu_drivers_command.rc == 0
   become: true
   command:
-    cmd: ubuntu-drivers install -gpgpu
+    cmd: "ubuntu-drivers install --gpgpu"
   tags: install
 
 - name: establish nvidia driver
